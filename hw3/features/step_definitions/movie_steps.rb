@@ -20,7 +20,15 @@ end
 #  "When I check the following ratings: G"
 
 When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
-  # HINT: use String#split to split up the rating_list, then
-  #   iterate over the ratings and reuse the "When I check..." or
-  #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
+  rating_list.split(/ *, */).each {|chosen|
+    step "I #{uncheck}check \"ratings_#{chosen}\""
+  }
 end
+
+Then /I should see (none|all) of the movies/ do |amount|
+  negative = "not " if amount == "none"
+  Movie.find(:all).each {|movie|
+    step "I should #{negative}see \"#{movie.title}\""
+  }
+end
+
