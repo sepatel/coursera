@@ -14,6 +14,13 @@ module NavigationHelpers
     case page_name
 
     when /^the (RottenPotatoes )?home\s?page$/ then '/movies'
+    when /^the edit page for "(.+)"$/
+      movie = Movie.first(:conditions => ['title = ?', $1])
+      "/movies/#{movie.id}/edit"
+    when /^the details page for "(.+)"$/
+      movie = Movie.first(:conditions => ['title = ?', $1])
+      "/movies/#{movie.id}/edit"
+    when /^the Similar Movies page for "(.+)"$/ then "/movies/director?director=#{$1}"
     when /^the movies page$/ then '/movies'
     when /^the home\s?page$/
       '/'

@@ -30,3 +30,8 @@ Then /I should see (none|all) of the movies/ do |amount|
   }
 end
 
+Then /^the director of "([^"]*)" should be "([^"]*)"$/ do |movie_name, director_name|
+  movie = Movie.first(:conditions => ['title = ?', movie_name])
+  assert !movie.nil?
+  assert movie.director == director_name
+end

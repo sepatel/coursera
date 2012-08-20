@@ -6,6 +6,16 @@ class MoviesController < ApplicationController
     # will render app/views/movies/show.<extension> by default
   end
 
+  def purple
+    # the color purple?
+  end
+
+  def director
+    @director = params[:director] || ''
+    redirect_to movies_path if "" == @director
+    @movies = Movie.find_all_by_director(@director)
+  end
+
   def index
     sort = params[:sort] || session[:sort]
     case sort
